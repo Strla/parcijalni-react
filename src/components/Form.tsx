@@ -1,12 +1,4 @@
-import {
-  Box,
-  Center,
-  HStack,
-  VStack,
-  Text,
-  Input,
-  Button,
-} from "@chakra-ui/react";
+import { Box, VStack, Text, Input, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Repo, UserData } from "../App";
 import axios from "axios";
@@ -17,7 +9,6 @@ interface FormProps {
 
 const Form = ({ saveUserData }: FormProps) => {
   const [username, setUsername] = useState("");
-  const [userRepos, setUserRepos] = useState<Repo[]>([]);
 
   const handleUsernameInput = (name: string) => {
     setUsername(name);
@@ -32,10 +23,6 @@ const Form = ({ saveUserData }: FormProps) => {
       `https://api.github.com/users/${username}/repos`
     );
 
-    const catsResponse = await axios.get("https://catfact.ninja/facts");
-
-    console.log(catsResponse);
-
     const userData = {
       avatar_url: userResponse.data.avatar_url,
       name: userResponse.data.name,
@@ -46,7 +33,7 @@ const Form = ({ saveUserData }: FormProps) => {
     let userRepos: Repo[] = [];
 
     reposResponse.data.forEach((repo: any) => {
-      userRepos.push({ name: repo.name });
+      userRepos.push({ id: repo.id, name: repo.name });
     });
 
     const userAndRepoData = {
@@ -60,7 +47,14 @@ const Form = ({ saveUserData }: FormProps) => {
   };
 
   return (
-    <VStack border="1px solid black" p="1.5rem" h="20rem" w="50rem">
+    <VStack
+      border="1px solid black"
+      p="1.5rem"
+      h="20rem"
+      w="50rem"
+      my="3rem"
+      mx="auto"
+    >
       <form style={{ width: "100%", height: "100%" }} onSubmit={handleSubmit}>
         <Box
           w="100%"

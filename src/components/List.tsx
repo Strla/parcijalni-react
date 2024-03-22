@@ -1,16 +1,24 @@
-// const List = ({ listData }: ListProps) => {
-//   return <div>List</div>;
-// };
+import React from "react";
 
-// export default List;
+import { ListItem } from "./ListItem";
+import { List as ChakraList } from "@chakra-ui/react";
+import { Repo } from "../App";
 
-import React, { Component } from "react";
+interface ListProps {
+  listData: Repo[] | undefined;
+}
 
-export default class List extends Component {
+class List extends React.Component<ListProps> {
   render() {
-    const data = this.props;
-    console.log(data);
-
-    return <div></div>;
+    const { listData } = this.props;
+    return (
+      <ChakraList spacing={3} h="400px" overflowY={"auto"}>
+        {listData?.map((repo) => (
+          <ListItem key={repo.id} name={repo.name} />
+        ))}
+      </ChakraList>
+    );
   }
 }
+
+export default List;

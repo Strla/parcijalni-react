@@ -1,10 +1,11 @@
-import { Box, Center } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import "./App.css";
 import Form from "./components/Form";
 import React, { useState } from "react";
 import Results from "./components/Results";
 
 export interface Repo {
+  id: string;
   name: string;
 }
 
@@ -25,16 +26,25 @@ function App() {
     setUserData(data);
   };
 
+  const handleResetData = () => {
+    setUserData(undefined);
+  };
+
   return (
     <Box
-      h="100%"
+      h="fit-content"
       w="100%"
       display="flex"
       flexDir="column"
-      justifyContent="center"
+      justifyContent="flex-start"
       alignItems="center"
+      mx={"auto"}
     >
-      <Form saveUserData={handleSavingData} />
+      {userData === undefined ? (
+        <Form saveUserData={handleSavingData} />
+      ) : (
+        <Results data={userData} handleResetData={handleResetData} />
+      )}
     </Box>
   );
 }
